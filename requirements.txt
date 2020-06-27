@@ -12,7 +12,6 @@ Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.8
 Flask-PyMongo==2.3.0
 get==2019.4.13
-gyp==0.1
 idna==2.9
 ipaddress==1.0.23
 itsdangerous==1.1.0
