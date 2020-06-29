@@ -5,7 +5,7 @@ import pytesseract
 
 #pytesseract.pytesseract.tesseract_cmd = r"P:\Programs\Tesseract\tesseract.exe"
 #pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-pytesseract.pytesseract.tesseract_cmd = r"./app/.apt/usr/bin/tesseract-ocr"
+pytesseract.pytesseract.tesseract_cmd = r"./.apt/usr/share/tesseract-ocr/4.00/tessdata"
 
 def scan_image(photo):
     # Jer sliku dobivamo kao link, dohvacamo ju preko funkcije request()
