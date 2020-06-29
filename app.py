@@ -3,21 +3,25 @@ load_dotenv(find_dotenv())
 
 from flask import Flask, jsonify , request, json
 from flask_cors import CORS
-from fastapi import FastAPI, UploadFile, File
+from flask_pymongo import PyMongo
+from flask_bcrypt import Bcrypt
 from functools import wraps
 from bson import ObjectId
 
-import datetime, jwt, os, json, re, operator, bcrypt
+import datetime, jwt, os, json, re, operator
 import current_user as current
 import default_data as dflt
 import mongodb as mongodb
 import scan_engine
 
-db = mongodb.connect_to_db()
+mongodb.connect_to_db()
 
 app = Flask(__name__)
-#app = FastAPI()
+#app.config['MONGO_URI'] = 'mongodb+srv://Kristijan_10:Messi123@digitality-4hkuh.mongodb.net/digitality_production?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = 'mongodb+srv://admin:admin@cluster0-5uwqu.mongodb.net/test?retryWrites=true&w=majority'
 
+mongo = PyMongo(app)
+bcrypt = Bcrypt(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 def token_required(f):
@@ -194,7 +198,7 @@ def update_examination_date(cur_user):
 @token_required
 def sortArchives(cur_user):
 
-    if (db.archives.count() == 0):
+    if (mongo.db.archives.count() == 0):
         provjera = False
         return jsonify(provjera)
 
@@ -208,10 +212,10 @@ def sortArchives(cur_user):
         if(doc['sorttype'] == 'abecedno_uzlazno' or doc['sorttype'] == 'abecedno_silazno'): sortby = "name"
         else: sortby = "last_used"
 
-        for archives in db.archives.find({'_id': {'$in':doc['archive_ids']}}):
+        for archives in mongo.db.archives.find({'_id': {'$in':doc['archive_ids']}}):
             result.append(archives)
 
-        for archives in db.archives.find():
+        for archives in mongo.db.archives.find():
             if(archives['_id'] == doc['currentArchive_id']):
                 for sub in archives['subarchives']:
                     subarchives.append(sub)
