@@ -5,6 +5,7 @@ from flask import Flask, jsonify , request, json
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
+from fastapi import FastAPI, UploadFile, File
 from functools import wraps
 from bson import ObjectId
 
@@ -16,7 +17,9 @@ import scan_engine
 
 mongodb.connect_to_db()
 
-app = Flask(__name__)
+#app = Flask(__name__)
+app = FastAPI()
+
 #app.config['MONGO_URI'] = 'mongodb+srv://Kristijan_10:Messi123@digitality-4hkuh.mongodb.net/digitality_production?retryWrites=true&w=majority'
 app.config['MONGO_URI'] = 'mongodb+srv://admin:admin@cluster0-5uwqu.mongodb.net/test?retryWrites=true&w=majority'
 
