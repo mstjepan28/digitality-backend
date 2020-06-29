@@ -14,8 +14,9 @@ import mongodb as mongodb
 import scan_engine
 
 db = mongodb.connect_to_db()
-#123
-app = FastAPI()
+
+app = Flask(__name__)
+#app = FastAPI()
 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
