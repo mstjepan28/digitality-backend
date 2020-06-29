@@ -20,6 +20,7 @@ def connect_to_db():
         db = cluster["digitality_production"]
         
         index_email()
+        return db
     
     except:
         print("Failed to connect to the database!")
