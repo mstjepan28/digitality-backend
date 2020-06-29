@@ -98,7 +98,7 @@ def check_iban(iban_list, company_data):
         iban = company_ibans[0]
             
     return iban       
-   #
+   
 # POSTANSKI BROJ ###########################
 def get_pc_dict():
     try:
