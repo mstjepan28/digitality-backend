@@ -24,7 +24,7 @@ app = FastAPI()
 #app.config['MONGO_URI'] = 'mongodb+srv://admin:admin@cluster0-5uwqu.mongodb.net/test?retryWrites=true&w=majority'
 
 
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
