@@ -198,35 +198,16 @@ def update_examination_date(cur_user):
 @token_required
 def sortArchives(cur_user):
 
-    if (mongo.db.archives.count() == 0):
-        provjera = False
-        return jsonify(provjera)
+    doc = request.get_json()
 
-    else:
-        doc = request.get_json()
-        result = []
-        subarchives = []
+    if(doc['sorttype'] == 'abecedno_uzlazno' or doc['sorttype'] == 'datum_pregleda_uzlazno'): ascORdes = False
+    else: ascORdes = True
+    if(doc['sorttype'] == 'abecedno_uzlazno' or doc['sorttype'] == 'abecedno_silazno'): sortby = "name"
+    else: sortby = "last_used"
 
-        if(doc['sorttype'] == 'abecedno_uzlazno' or doc['sorttype'] == 'datum_pregleda_uzlazno'): ascORdes = False
-        else: ascORdes = True
-        if(doc['sorttype'] == 'abecedno_uzlazno' or doc['sorttype'] == 'abecedno_silazno'): sortby = "name"
-        else: sortby = "last_used"
-
-        for archives in mongo.db.archives.find({'_id': {'$in':doc['archive_ids']}}):
-            result.append(archives)
-
-        for archives in mongo.db.archives.find():
-            if(archives['_id'] == doc['currentArchive_id']):
-                for sub in archives['subarchives']:
-                    subarchives.append(sub)
-
-        subarchives.sort(key=operator.itemgetter(sortby),reverse=ascORdes)
-        
-        for archives in result:
-            if(archives['_id'] == doc['currentArchive_id']):
-                archives['subarchives'] = subarchives
-
-        return jsonify(result)
+    UserArchive = mongodb.get_one_archive(doc['currentArchive_id'])
+    UserArchive['subarchives'].sort(key=operator.itemgetter(sortby),reverse=ascORdes)  
+    return jsonify(UserArchive)
 
 
 @app.route('/archives/share', methods=['POST'])
