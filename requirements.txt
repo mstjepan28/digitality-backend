@@ -40,6 +40,6 @@ urllib3==1.25.9
 Werkzeug==1.0.1
 gunicorn==20.0.4
 uvicorn==0.11.5
-fastapi==0.58.1
+fastapi==0.65.2
 asgi-lifespan==1.0.1
 bcrypt==3.1.7
